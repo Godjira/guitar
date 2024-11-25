@@ -38,5 +38,23 @@ nav a:hover {
         <h1>Welcome to My Website</h1>
         <p>This is the Home page!</p>
     </div>
+    <!-- Add the audio player here -->
+    <div class="audio-container">
+        <div class="green-audio-player">
+            <audio>
+                <source src="audio/melody_001.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+    </div>
+    :::
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            GreenAudioPlayer.init({
+                selector: '.green-audio-player',
+                stopOthersOnPlay: true
+            });
+        });
+    </script>
 </body>
 </html>
