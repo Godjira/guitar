@@ -1,41 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
+    <title>My Audio Site</title>
     <link rel="stylesheet" href="css/green-audio-player.min.css">
     <script src="js/green-audio-player.min.js"></script>
-    
-    <style>
-        .audio-container {
-            width: 400px;
-            margin: 20px auto;
-        }
-    </style>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Home - My Website</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
         }
         nav {
-    background-color: #333; /* Dark background */
-    color: #fff; /* White text */
-    padding: 10px; /* Spacing inside the bar */
-}
-
-nav a {
-    color: #fff; /* White links */
-    text-decoration: none; /* Remove underline */
-    margin: 0 10px; /* Space between links */
-}
-
-nav a:hover {
-    text-decoration: underline; /* Add underline on hover */
-}
-
+            margin-bottom: 20px;
+        }
+        nav a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #333;
+        }
+        .audio-container {
+            width: 400px;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
@@ -44,19 +31,19 @@ nav a:hover {
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
     </nav>
+
     <div class="content">
         <h1>Welcome to My Website</h1>
         <p>This is the Home page!</p>
-    </div>
-    <!-- Add the audio player here -->
-    <div class="audio-container">
-        <div class="green-audio-player">
-            <audio>
-                <source src="audio/melody_001.mp3" type="audio/mpeg">
-            </audio>
+        
+        <div class="audio-container">
+            <div class="green-audio-player">
+                <audio>
+                    <source src="audio/melody_001.mp3" type="audio/mpeg">
+                </audio>
+            </div>
         </div>
     </div>
-    :::
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
