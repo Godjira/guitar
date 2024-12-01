@@ -8,6 +8,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
             wrapper.innerHTML = data;
 
+            // Set the audio source after the content is loaded
+            const audioElement = wrapper.querySelector('audio source');
+            if (audioElement) {
+                audioElement.src = audioSource;
+            }
+
             // Initialize GreenAudioPlayer after content is loaded
             GreenAudioPlayer.init({
                 selector: '.green-audio-player',

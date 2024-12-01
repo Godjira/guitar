@@ -1,0 +1,11 @@
+{
+    "id": "melody_001",
+    "title": "Melody 001",
+    "audioFile": "audio.mp3",
+    "description": "Мелодія 1",
+    "toggleContent": {
+        "title": "Additional Details",
+        "text": "This piece was composed in 2024...",
+        "image": false
+    }
+}
