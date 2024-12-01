@@ -37,28 +37,8 @@
         <p>This is the Home page!</p>
         
         <div id="audio-container-wrapper"></div>
-
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            GreenAudioPlayer.init({
-                selector: '.green-audio-player',
-                stopOthersOnPlay: true
-            });
-        });
-    </script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        fetch('audio-container.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('audio-container-wrapper').innerHTML = data;
-                console.log(data);
-            })
-            .catch(error => console.error('Error loading audio container:', error));
-    });
-</script>
+    <script src="js/fetch-audio-container.js"></script>
 </body>
 </html>

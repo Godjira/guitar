@@ -1,7 +1,18 @@
 <div class="audio-container">
     <div class="green-audio-player">
         <audio loop>
-            <source src="audio/melody_001/audio.mp3" type="audio/mpeg">
+            <source id="audio-source" type="audio/mpeg">
         </audio>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const audioSource = urlParams.get('audioSource');
+        
+        if (audioSource) {
+            document.getElementById('audio-source').setAttribute('src', audioSource);
+        }
+    });
+</script>
