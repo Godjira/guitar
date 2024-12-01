@@ -54,8 +54,8 @@
         fetch('audio-container.html')
             .then(response => response.text())
             .then(data => {
-                document.getElementById('audio-container-wapper').innerHTML = data;
-                print(data)
+                document.getElementById('audio-container-wrapper').innerHTML = data;
+                console.log(data);
             })
             .catch(error => console.error('Error loading audio container:', error));
     });
