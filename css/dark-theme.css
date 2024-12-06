@@ -1,0 +1,106 @@
+:root {
+    --bg-color: #1a1a1a;
+    --text-color: #e0e0e0;
+    --link-color: #66b3ff;
+    --link-hover-color: #99ccff;
+    --border-color: #333;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--link-hover-color);
+}
+
+h1 {
+    color: var(--text-color);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+/* Audio container dark theme */
+.audio-container {
+    background-color: #242424;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid var(--border-color);
+}
+
+.audio-title {
+    color: var(--text-color);
+}
+
+.audio-description {
+    color: #b0b0b0;
+}
+
+.toggle-button {
+    background-color: #333;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-button:hover {
+    background-color: #404040;
+}
+
+.toggle-content {
+    background-color: #242424;
+    border: 1px solid var(--border-color);
+    border-top: none;
+    padding: 15px;
+}
+
+/* Green Audio Player dark theme overrides */
+.green-audio-player {
+    background: #242424 !important;
+    box-shadow: none !important;
+    border: 1px solid var(--border-color);
+}
+
+.green-audio-player .slider {
+    background: #404040 !important;
+}
+
+.green-audio-player .controls {
+    color: var(--text-color) !important;
+}
+
+.green-audio-player .volume {
+    background: #404040 !important;
+}
+
+.green-audio-player .volume .volume__button {
+    color: var(--text-color) !important;
+}
+
+.green-audio-player .slider .gap-progress {
+    background-color: var(--link-color) !important;
+}
+
+.green-audio-player .volume .volume__button.volume__button--unmute {
+    color: var(--link-color) !important;
+}
