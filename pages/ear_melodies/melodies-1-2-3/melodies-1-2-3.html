@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мелодії 1-2-3</title>
+    <script src="../../../js/green-audio-player.min.js"></script>
+
+    <script src="../../../js/howler.js"></script>
+
+
+    <link rel="stylesheet" href="../../../css/green-audio-player.min.css">
+    <link rel="stylesheet" href="../../../css/dark-theme.css">
+</head>
+<body>
+    <div class="content">
+        <h1>Найпростіші мелодії 1-2-3</h1>
+        <nav>
+            <ul>
+                <li><a href="../../../index.html">Головна</a></li>
+                <li><a href="simple-melodies-1-2.html">Найпростіші мелодії 1-2</a></li>
+            </ul>
+        </nav>
+        <div class="audio-container-wrapper"data-audio-folder="audio/melody_001"></div>
+    </div>
+    <script src="../../../js/fetch-audio-container.js"></script>
+
+</body>
+
+<script>
+ window.addEventListener('load', function () {
+        var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        var source = audioCtx.createBufferSource();
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'audio-autoplay.wav');
+        xhr.responseType = 'arraybuffer';
+        xhr.addEventListener('load', function (r) {
+            audioCtx.decodeAudioData(
+                    xhr.response, 
+                    function (buffer) {
+                        source.buffer = buffer;
+                        source.connect(audioCtx.destination);
+                        source.loop = false;
+                    });
+            source.start(0);
+        });
+        xhr.send();
+    });
+</script>
+
+</html>
