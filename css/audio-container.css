@@ -1,5 +1,7 @@
 .audio-container {
-    max-width: 300px;
+    max-width: 600px;
+    min-width: 100px;
+    width: 70%;
     margin: 0 auto;
     padding: 20px;
 }
