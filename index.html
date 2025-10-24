@@ -1,27 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Audio Site</title>
-    <link rel="stylesheet" href="css/green-audio-player.min.css">
-    <script src="js/green-audio-player.min.js"></script>
-    <link rel="stylesheet" href="css/dark-theme.css">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini Video Player</title>
+<style>
+  body {
+    font-family: sans-serif;
+    background: #f0f0f0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 20px;
+  }
+  .video-container {
+    width: 200px; /* маленький розмір */
+    border: 1px solid #ccc;
+    padding: 5px;
+    background: #fff;
+    border-radius: 8px;
+    text-align: center;
+  }
+  video {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .controls {
+    margin-top: 5px;
+    font-size: 14px;
+  }
+  .controls button {
+    margin: 0 2px;
+    padding: 2px 6px;
+    cursor: pointer;
+  }
+</style>
 </head>
 <body>
 
+<div class="video-container">
+  <video src="video1.mp4" loop muted></video>
+  <div class="controls">
+    <button class="play">▶️</button>
+    <button class="pause">⏸️</button>
+  </div>
+</div>
 
-    <div class="content">
-        <h1>Головна сторінка</h1>
+<div class="video-container">
+  <video src="Надворі червоніє Український романс акорди_1080p.mp4" loop muted></video>
+  <div class="controls">
+    <button class="play">▶️</button>
+    <button class="pause">⏸️</button>
+  </div>
+</div>
 
-        <nav>
-            <ul>
-                <li><a href="pages/ear_melodies/simple-melodies-1-2/simple-melodies-1-2.html">Найпростіші мелодії 1-2</a></li>
-                <li><a href="pages/ear_melodies/melodies-1-2-3/melodies-1-2-3.html">Мелодії 1-2-3</a></li>
-            </ul>
-        </nav>
+<script>
+  document.querySelectorAll('.video-container').forEach(container => {
+    const video = container.querySelector('video');
+    const playBtn = container.querySelector('.play');
+    const pauseBtn = container.querySelector('.pause');
 
-    </div>
+    playBtn.addEventListener('click', () => video.play());
+    pauseBtn.addEventListener('click', () => video.pause());
 
-    <script src="js/fetch-audio-container.js"></script>
+    // клік по відео теж запускає/ставить на паузу
+    video.addEventListener('click', () => {
+      if(video.paused) video.play();
+      else video.pause();
+    });
+  });
+</script>
+
 </body>
 </html>
