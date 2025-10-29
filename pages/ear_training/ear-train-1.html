@@ -1,31 +1,123 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Слух 1-5</title>
-    <script src="https://godjira.github.io/guitar/js/green-audio-player.min.js"></script>
-    <link rel="stylesheet" href="https://godjira.github.io/guitar/css/green-audio-player.min.css">
-    <link rel="stylesheet" href="https://godjira.github.io/guitar/css/dark-theme.css">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini Audio Player</title>
+<style>
+  body {
+    font-family: sans-serif;
+    background: #f0f0f0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 20px;
+  }
+  .audio-container {
+    width: 200px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    background: #fff;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .title {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  .controls {
+    margin-top: 5px;
+  }
+  .controls button {
+    margin: 0 2px;
+    padding: 2px 6px;
+    cursor: pointer;
+  }
+  .progress {
+    width: 100%;
+    margin: 5px 0;
+  }
+</style>
 </head>
 <body>
-    <div class="content">
-        <h1>Давай</h1>
-        <nav>
-            <ul>
-                <li><a href="https://godjira.github.io/guitar/index.html">Головна</a></li>
-                <li><a href="simple-melodies-1-2-3.html">Найпростіші мелодії 1-2</a></li>
-            </ul>
-        </nav>
-        
-        <div class="audio-container-wrapper"data-audio-folder="audio/melody_001"></div>
+</head>
+<body>
 
-    </div>
+<div class="audio-container">
+  <div class="title">Аудіо 1</div>
+  <audio src="https://godjira.github.io/guitar/pages/ear_training/audio/Ex1.mp3"></audio>
+  <input type="range" class="progress" value="0" min="0" max="100">
+  <div class="controls">
+    <button class="play">▶️</button>
+    <button class="pause">⏸️</button>
+  </div>
+</div>
 
-    <script src="../../../js/fetch-audio-container.js"></script>
+<div class="audio-container">
+  <div class="title">Аудіо 2</div>
+  <audio src="https://godjira.github.io/guitar/pages/ear_training/audio/Ex2.mp3"></audio>
+  <input type="range" class="progress" value="0" min="0" max="100">
+  <div class="controls">
+    <button class="play">▶️</button>
+    <button class="pause">⏸️</button>
+  </div>
+</div>
 
-    
+<div class="audio-container">
+  <div class="title">Аудіо 3</div>
+  <audio src="https://godjira.github.io/guitar/pages/ear_training/audio/Ex3.mp3"></audio>
+  <input type="range" class="progress" value="0" min="0" max="100">
+  <div class="controls">
+    <button class="play">▶️</button>
+    <button class="pause">⏸️</button>
+  </div>
+</div>
+
+<div class="audio-container">
+  <div class="title">Аудіо 4</div>
+  <audio src="https://godjira.github.io/guitar/pages/ear_training/audio/Ex4.mp3"></audio>
+  <input type="range" class="progress" value="0" min="0" max="100">
+  <div class="controls">
+    <button class="play">▶️</button>
+    <button class="pause">⏸️</button>
+  </div>
+</div>
+
+<div class="audio-container">
+  <div class="title">Аудіо 5</div>
+  <audio src="https://godjira.github.io/guitar/pages/ear_training/audio/Ex5.mp3"></audio>
+  <input type="range" class="progress" value="0" min="0" max="100">
+
+  <div class="controls">
+    <button class="play">▶️</button>
+    <button class="pause">⏸️</button>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.audio-container').forEach(container => {
+    const audio = container.querySelector('audio');
+    const progress = container.querySelector('.progress');
+    const playBtn = container.querySelector('.play');
+    const pauseBtn = container.querySelector('.pause');
+
+    // play/pause
+    playBtn.addEventListener('click', () => audio.play());
+    pauseBtn.addEventListener('click', () => audio.pause());
+
+    // оновлення полоски
+    audio.addEventListener('timeupdate', () => {
+      const percentage = (audio.currentTime / audio.duration) * 100;
+      progress.value = percentage || 0;
+    });
+
+    // перемотування
+    progress.addEventListener('input', () => {
+      audio.currentTime = (progress.value / 100) * audio.duration;
+    });
+  });
+</script>
+
 
 </body>
 </html>
