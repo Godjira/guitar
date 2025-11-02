@@ -115,9 +115,9 @@
 
 <div id="fretboard"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@moonwave99/fretboard.js"></script>
+<script type="module">
+  import { Fretboard } from 'https://cdn.jsdelivr.net/npm/@moonwave99/fretboard.js/dist/fretboard.esm.js';
 
-<script>
   const fb = new Fretboard({
     el: '#fretboard',
     tuning: ['E2','A2','D3','G3','B3','E4'],
