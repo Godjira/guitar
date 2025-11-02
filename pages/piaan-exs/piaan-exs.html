@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Завдання на слух</title>
+<style>
+  body {
+    font-family: sans-serif;
+    background: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 20px;
+  }
+
+  .audio-container {
+    width: 220px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background: #fff;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .title {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .controls {
+    margin-top: 6px;
+  }
+
+  .controls button {
+    margin: 0 3px;
+    padding: 4px 8px;
+    cursor: pointer;
+  }
+
+  .progress {
+    width: 100%;
+    margin: 6px 0;
+  }
+
+  /* мобільна адаптація */
+  @media (max-width: 600px) {
+    .audio-container {
+      width: 100%;
+      max-width: 350px;
+    }
+  }
+</style>
+</head>
+<body>
+</head>
+<body>
+
+<div class="audio-container">
+  <div class="title">Аудіо 1</div>
+  <audio src="https://godjira.github.io/guitar/pages/piaan-exs/audio/Ex1.mp3" loop></audio>
+  <input type="range" class="progress" value="0" min="0" max="100">
+  <div class="controls">
+    <button class="play">▶️</button>
+    <button class="pause">⏸️</button>
+  </div>
+</div>
+
+<div class="audio-container">
+  <div class="title">Аудіо 2</div>
+  <audio src="https://godjira.github.io/guitar/pages/piaan-exs/audio/Ex2.mp3" loop></audio>
+  <input type="range" class="progress" value="0" min="0" max="100">
+  <div class="controls">
+    <button class="play">▶️</button>
+    <button class="pause">⏸️</button>
+  </div>
+</div>
+
+<div class="audio-container">
+  <div class="title">Аудіо 3</div>
+  <audio src="https://godjira.github.io/guitar/pages/piaan-exs/audio/Ex3.mp3" loop></audio>
+  <input type="range" class="progress" value="0" min="0" max="100">
+  <div class="controls">
+    <button class="play">▶️</button>
+    <button class="pause">⏸️</button>
+  </div>
+</div>
+
+<div class="audio-container">
+  <div class="title">Аудіо 4</div>
+  <audio src="https://godjira.github.io/guitar/pages/piaan-exs/audio/Ex4.mp3" loop></audio>
+  <input type="range" class="progress" value="0" min="0" max="100">
+  <div class="controls">
+    <button class="play">▶️</button>
+    <button class="pause">⏸️</button>
+  </div>
+</div>
+
+<div class="audio-container">
+  <div class="title">Аудіо 5</div>
+  <audio src="https://godjira.github.io/guitar/pages/piaan-exs/audio/Ex5.mp3" loop></audio>
+  <input type="range" class="progress" value="0" min="0" max="100">
+
+  <div class="controls">
+    <button class="play">▶️</button>
+    <button class="pause">⏸️</button>
+  </div>
+</div>
+
+<div id="fretboard"></div>
+
+
+<!-- CDN для Fretboard.js -->
+<script src="https://cdn.jsdelivr.net/npm/@moonwave99/fretboard.js"></script>
+
+<script>
+  const fb = new Fretboard({
+    el: '#fretboard',
+    tuning: ['E2','A2','D3','G3','B3','E4'],
+    strings: 6,
+    frets: 12,
+    color: '#fff',
+    dotColor: 'orange'
+  });
+
+  fb.setDots([
+    { string: 5, fret: 3 },
+    { string: 4, fret: 2 },
+    { string: 2, fret: 1 }
+  ]).render();
+</script>
+
+<script>
+  document.querySelectorAll('.audio-container').forEach(container => {
+    const audio = container.querySelector('audio');
+    const progress = container.querySelector('.progress');
+    const playBtn = container.querySelector('.play');
+    const pauseBtn = container.querySelector('.pause');
+
+    // play/pause
+    playBtn.addEventListener('click', () => audio.play());
+    pauseBtn.addEventListener('click', () => audio.pause());
+
+    // оновлення полоски
+    audio.addEventListener('timeupdate', () => {
+      const percentage = (audio.currentTime / audio.duration) * 100;
+      progress.value = percentage || 0;
+    });
+
+    // перемотування
+    progress.addEventListener('input', () => {
+      audio.currentTime = (progress.value / 100) * audio.duration;
+    });
+  });
+</script>
+
+
+</body>
+</html>
