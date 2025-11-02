@@ -46,18 +46,22 @@
     margin: 6px 0;
   }
 
-  /* мобільна адаптація */
   @media (max-width: 600px) {
     .audio-container {
       width: 100%;
       max-width: 350px;
     }
   }
+
+  #fretboard {
+    width: 100%;
+    margin-top: 40px;
+  }
 </style>
 </head>
 <body>
-</head>
-<body>
+
+<!-- Твій аудіобалет тут... (не чіпаю) -->
 
 <div class="audio-container">
   <div class="title">Аудіо 1</div>
@@ -103,7 +107,6 @@
   <div class="title">Аудіо 5</div>
   <audio src="https://godjira.github.io/guitar/pages/piaan-exs/audio/Ex5.mp3" loop></audio>
   <input type="range" class="progress" value="0" min="0" max="100">
-
   <div class="controls">
     <button class="play">▶️</button>
     <button class="pause">⏸️</button>
@@ -112,8 +115,6 @@
 
 <div id="fretboard"></div>
 
-
-<!-- CDN для Fretboard.js -->
 <script src="https://cdn.jsdelivr.net/npm/@moonwave99/fretboard.js"></script>
 
 <script>
@@ -122,7 +123,7 @@
     tuning: ['E2','A2','D3','G3','B3','E4'],
     strings: 6,
     frets: 12,
-    color: '#fff',
+    color: '#000',
     dotColor: 'orange'
   });
 
@@ -140,23 +141,19 @@
     const playBtn = container.querySelector('.play');
     const pauseBtn = container.querySelector('.pause');
 
-    // play/pause
     playBtn.addEventListener('click', () => audio.play());
     pauseBtn.addEventListener('click', () => audio.pause());
 
-    // оновлення полоски
     audio.addEventListener('timeupdate', () => {
       const percentage = (audio.currentTime / audio.duration) * 100;
       progress.value = percentage || 0;
     });
 
-    // перемотування
     progress.addEventListener('input', () => {
       audio.currentTime = (progress.value / 100) * audio.duration;
     });
   });
 </script>
-
 
 </body>
 </html>
