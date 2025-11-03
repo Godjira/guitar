@@ -149,8 +149,10 @@
       currentAudio = audio; // позначаємо нове як активне
     });
 
-    pauseBtn.addEventListener('click', () => audio.pause());
-
+    pauseBtn.addEventListener('click', () => {
+      audio.pause();
+      if (currentAudio === audio) currentAudio = null;
+    });
     audio.addEventListener('timeupdate', () => {
       const percentage = (audio.currentTime / audio.duration) * 100;
       progress.value = percentage || 0;
