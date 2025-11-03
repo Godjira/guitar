@@ -141,7 +141,14 @@
     const playBtn = container.querySelector('.play');
     const pauseBtn = container.querySelector('.pause');
 
-    playBtn.addEventListener('click', () => audio.play());
+    playBtn.addEventListener('click', () => {
+      if (currentAudio && currentAudio !== audio) {
+        currentAudio.pause(); // зупиняємо попереднє
+      }
+      audio.play();
+      currentAudio = audio; // позначаємо нове як активне
+    });
+
     pauseBtn.addEventListener('click', () => audio.pause());
 
     audio.addEventListener('timeupdate', () => {
