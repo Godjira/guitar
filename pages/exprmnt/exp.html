@@ -1,127 +1,76 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Гра з фразою</title>
-<style>
-  body { font-family: sans-serif; text-align: center; background: #f0f0f0; padding: 20px; }
-  #center { font-size: 2em; margin: 30px; }
-  .buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-  button { padding: 10px 20px; font-size: 1em; cursor: pointer; }
-  #score { font-size: 1.2em; margin-top: 20px; }
-  #timer { font-size: 1.2em; margin-top: 10px; }
-</style>
+  <meta charset="UTF-8">
+  <title>MIDI Player</title>
 </head>
 <body>
 
-<h1>Гра з фразою</h1>
-<div id="center">🧠</div>
+<h2>MIDI Player</h2>
 
-<div class="buttons" id="wordButtons"></div>
-<button id="skipBtn">Пропустити</button>
+<input type="file" id="fileInput" accept=".mid,.midi" />
+<br><br>
 
-<div id="score">Бали: 0</div>
-<div id="timer">Час: 30</div>
+<button onclick="play()">Play</button>
+<button onclick="pause()">Pause</button>
+<button onclick="stop()">Stop</button>
 
-<script>
-const phrase = ["чом", "чорним", "чорнилом", "чорніє", "рядок"];
-let index = 0;
-let score = 0;
-let time = 30;
-let timerId;
+<script type="module">
+import * as Tone from "https://cdn.skypack.dev/tone";
+import { Midi } from "https://cdn.skypack.dev/@tonejs/midi";
 
-const center = document.getElementById('center');
-const buttonsDiv = document.getElementById('wordButtons');
-const scoreDiv = document.getElementById('score');
-const timerDiv = document.getElementById('timer');
-const skipBtn = document.getElementById('skipBtn');
+let midi;
+let synth;
 
-function shuffle(array) {
-  return array.sort(() => Math.random() - 0.5);
-}
+async function loadMidi(file) {
+  const arrayBuffer = await file.arrayBuffer();
+  midi = new Midi(arrayBuffer);
 
-function nextWord() {
-  // Вибираємо тип: ✋ Рука, 🦶 Нога, 🧠 Голова
-  const types = ['hand', 'foot', 'head'];
-  const type = types[Math.floor(Math.random() * types.length)];
+  // створюємо synth
+  synth = new Tone.PolySynth(Tone.Synth).toDestination();
 
-  center.textContent = type === 'hand' ? '✋' : type === 'foot' ? '🦶' : '🧠';
+  // очищаємо попередній Transport
+  Tone.Transport.cancel();
 
-  let currentWord = phrase[index];
-  
-  // Створюємо варіанти слів
-  let options = shuffle([...phrase]);
-  
-  buttonsDiv.innerHTML = '';
-  options.forEach(word => {
-    const btn = document.createElement('button');
-    btn.textContent = word;
-    btn.onclick = () => handleClick(word, type);
-    buttonsDiv.appendChild(btn);
+  // плануємо ноти
+  midi.tracks.forEach(track => {
+    track.notes.forEach(note => {
+      Tone.Transport.schedule(time => {
+        synth.triggerAttackRelease(
+          note.name,
+          note.duration,
+          time,
+          note.velocity
+        );
+      }, note.time);
+    });
   });
 }
 
-function handleClick(word, type) {
-  const currentWord = phrase[index];
-  
-  if(type === 'head') {
-    if(word === currentWord) {
-      score++;
-      scoreDiv.textContent = `Бали: ${score}`;
-      index = (index + 1) % phrase.length;
-      nextWord();
-    } else {
-      alert(`Невірно! Слово було: "${currentWord}". Починаємо спочатку.`);
-      score = 0;
-      scoreDiv.textContent = `Бали: ${score}`;
-      index = 0;
-      nextWord();
-    }
-  } else if(type === 'hand') {
-    // ✋ показує слово, гравець пропускає → завжди OK
-    alert(`Пропускаємо слово: "${currentWord}"`);
-    index = (index + 1) % phrase.length;
-    nextWord();
-  } else if(type === 'foot') {
-    // 🦶 не показує слово → треба пропустити
-    if(word !== currentWord) {
-      index = (index + 1) % phrase.length;
-      nextWord();
-    } else {
-      alert(`Не можна натискати на слово! Починаємо спочатку.`);
-      score = 0;
-      scoreDiv.textContent = `Бали: ${score}`;
-      index = 0;
-      nextWord();
-    }
+document.getElementById("fileInput").addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    await loadMidi(file);
+    console.log("MIDI loaded");
   }
-}
+});
 
-skipBtn.onclick = () => {
-  index = (index + 1) % phrase.length;
-  nextWord();
+window.play = async function() {
+  if (!midi) return alert("Load MIDI first");
+
+  await Tone.start(); // обов'язково після кліку
+  Tone.Transport.start();
 };
 
-// Таймер
-function startTimer() {
-  timerId = setInterval(() => {
-    time--;
-    timerDiv.textContent = `Час: ${time}`;
-    if(time <= 0) {
-      clearInterval(timerId);
-      alert('Час вийшов! Починаємо спочатку.');
-      score = 0;
-      scoreDiv.textContent = `Бали: ${score}`;
-      time = 30;
-      index = 0;
-      nextWord();
-      startTimer();
-    }
-  }, 1000);
-}
+window.pause = function() {
+  Tone.Transport.pause();
+};
 
-nextWord();
-startTimer();
+window.stop = function() {
+  Tone.Transport.stop();
+  Tone.Transport.position = 0;
+};
+
 </script>
 
 </body>
