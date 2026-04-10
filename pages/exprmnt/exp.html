@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<title>Гра з фразою</title>
+<style>
+  body { font-family: sans-serif; text-align: center; background: #f0f0f0; padding: 20px; }
+  #center { font-size: 2em; margin: 30px; }
+  .buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  button { padding: 10px 20px; font-size: 1em; cursor: pointer; }
+  #score { font-size: 1.2em; margin-top: 20px; }
+  #timer { font-size: 1.2em; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<h1>Гра з фразою</h1>
+<div id="center">🧠</div>
+
+<div class="buttons" id="wordButtons"></div>
+<button id="skipBtn">Пропустити</button>
+
+<div id="score">Бали: 0</div>
+<div id="timer">Час: 30</div>
+
+<script>
+const phrase = ["чом", "чорним", "чорнилом", "чорніє", "рядок"];
+let index = 0;
+let score = 0;
+let time = 30;
+let timerId;
+
+const center = document.getElementById('center');
+const buttonsDiv = document.getElementById('wordButtons');
+const scoreDiv = document.getElementById('score');
+const timerDiv = document.getElementById('timer');
+const skipBtn = document.getElementById('skipBtn');
+
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+function nextWord() {
+  // Вибираємо тип: ✋ Рука, 🦶 Нога, 🧠 Голова
+  const types = ['hand', 'foot', 'head'];
+  const type = types[Math.floor(Math.random() * types.length)];
+
+  center.textContent = type === 'hand' ? '✋' : type === 'foot' ? '🦶' : '🧠';
+
+  let currentWord = phrase[index];
+  
+  // Створюємо варіанти слів
+  let options = shuffle([...phrase]);
+  
+  buttonsDiv.innerHTML = '';
+  options.forEach(word => {
+    const btn = document.createElement('button');
+    btn.textContent = word;
+    btn.onclick = () => handleClick(word, type);
+    buttonsDiv.appendChild(btn);
+  });
+}
+
+function handleClick(word, type) {
+  const currentWord = phrase[index];
+  
+  if(type === 'head') {
+    if(word === currentWord) {
+      score++;
+      scoreDiv.textContent = `Бали: ${score}`;
+      index = (index + 1) % phrase.length;
+      nextWord();
+    } else {
+      alert(`Невірно! Слово було: "${currentWord}". Починаємо спочатку.`);
+      score = 0;
+      scoreDiv.textContent = `Бали: ${score}`;
+      index = 0;
+      nextWord();
+    }
+  } else if(type === 'hand') {
+    // ✋ показує слово, гравець пропускає → завжди OK
+    alert(`Пропускаємо слово: "${currentWord}"`);
+    index = (index + 1) % phrase.length;
+    nextWord();
+  } else if(type === 'foot') {
+    // 🦶 не показує слово → треба пропустити
+    if(word !== currentWord) {
+      index = (index + 1) % phrase.length;
+      nextWord();
+    } else {
+      alert(`Не можна натискати на слово! Починаємо спочатку.`);
+      score = 0;
+      scoreDiv.textContent = `Бали: ${score}`;
+      index = 0;
+      nextWord();
+    }
+  }
+}
+
+skipBtn.onclick = () => {
+  index = (index + 1) % phrase.length;
+  nextWord();
+};
+
+// Таймер
+function startTimer() {
+  timerId = setInterval(() => {
+    time--;
+    timerDiv.textContent = `Час: ${time}`;
+    if(time <= 0) {
+      clearInterval(timerId);
+      alert('Час вийшов! Починаємо спочатку.');
+      score = 0;
+      scoreDiv.textContent = `Бали: ${score}`;
+      time = 30;
+      index = 0;
+      nextWord();
+      startTimer();
+    }
+  }, 1000);
+}
+
+nextWord();
+startTimer();
+</script>
+
+</body>
+</html>
